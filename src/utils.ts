@@ -6,4 +6,4 @@ export const saturate = (x: number, max: number = 1) =>
 const range = (n: number) => [...Array(n).keys()];
 
 export const linspace = (a: number, b: number, n: number) =>
-  range(n).map((i) => (i * (b - a)) / (n - 1) + a);
+  range(n).map((i) => (i * (b - a)) / n + a);

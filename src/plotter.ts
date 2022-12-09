@@ -18,7 +18,7 @@ export class CanvasPlotter implements Plotter {
     this.#context.moveTo(...this.#position);
     this.#context.lineTo(...position);
     // this.#context.strokeStyle = `hsl(${this.#count % 360}, 100%, 75%)`;
-    this.#context.lineWidth = 0.5;
+    this.#context.lineWidth = 2;
     this.#context.stroke();
     this.#position = position;
     this.#count += 1;

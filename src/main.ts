@@ -34,7 +34,7 @@ let update = (traces: Trace[]): Trace[] =>
 let traces: Trace[] = [];
 
 const generate = (position: [number, number]) => {
-  return linspace(0, 2 * Math.PI, 50).map(
+  return linspace(0, 2 * Math.PI, 10).map(
     (d): Trace => ({
       head: new Branch({
         position: [...position],
