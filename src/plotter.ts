@@ -1,31 +1,28 @@
-import { uniform } from "./utils";
+import { State } from "./heads/head";
 
 export interface Plotter {
-  plot: (p: [number, number]) => void;
+  plot: (s: State) => void;
   copy: () => Plotter;
 }
 
 export class CanvasPlotter implements Plotter {
   #position: [number, number];
   #context: CanvasRenderingContext2D;
-  #count: number = uniform(0, 360);
   constructor(position: [number, number], context: CanvasRenderingContext2D) {
     this.#position = position;
     this.#context = context;
   }
-  plot = (position: [number, number]) => {
+  plot = (state: State) => {
     this.#context.beginPath();
     this.#context.moveTo(...this.#position);
-    this.#context.lineTo(...position);
-    // this.#context.strokeStyle = `hsl(${this.#count % 360}, 100%, 75%)`;
+    this.#context.lineTo(...state.position);
+    this.#context.strokeStyle = state.color;
     this.#context.lineWidth = 2;
     this.#context.stroke();
-    this.#position = position;
-    this.#count += 1;
+    this.#position = [...state.position];
   };
   copy = (): CanvasPlotter => {
     const p = new CanvasPlotter(this.#position, this.#context);
-    p.#count = this.#count;
     return p;
   };
 }

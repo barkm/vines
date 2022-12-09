@@ -1,4 +1,4 @@
-import { Head } from "./head";
+import { Head, State } from "./head";
 
 export interface LeafParams {
   position: [number, number];
@@ -6,6 +6,7 @@ export interface LeafParams {
   length?: number;
   width?: number;
   steps?: number;
+  color?: string;
 }
 
 export const makeLeaf = (params: LeafParams): [Head, Head] => {
@@ -23,6 +24,7 @@ class LeafSide implements Head {
   #length: number;
   #width: number;
   #steps: number;
+  #color: string;
   #count: number = 0;
   #side: Side;
   constructor(
@@ -32,6 +34,7 @@ class LeafSide implements Head {
       length = 40,
       width = 10,
       steps = 20,
+      color = "black",
     }: LeafParams,
     side: Side
   ) {
@@ -41,11 +44,12 @@ class LeafSide implements Head {
     this.#width = width;
     this.#steps = steps;
     this.#side = side;
+    this.#color = color;
   }
   spawn(): Head[] {
     return [];
   }
-  next(): IteratorResult<[number, number]> {
+  next(): IteratorResult<State> {
     let t = this.#count / this.#steps;
     const done = t >= 1;
     t = Math.min(t, 1);
@@ -59,7 +63,7 @@ class LeafSide implements Head {
     ] as [number, number];
     this.#count += 1;
     return {
-      value: position,
+      value: { position: position, color: this.#color },
       done: done,
     };
   }

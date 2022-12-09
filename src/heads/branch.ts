@@ -1,5 +1,5 @@
 import { saturate, uniform } from "../utils";
-import { Head } from "./head";
+import { Head, State } from "./head";
 import { makeLeaf } from "./leaf";
 import { makeFlower } from "./flower";
 
@@ -41,7 +41,7 @@ export class Branch implements Head {
     this.#leaf_prob = leaf_prob;
     this.#flower_prob = flower_prob;
   }
-  next(): IteratorResult<[number, number]> {
+  next(): IteratorResult<State> {
     if (!this.#done) {
       this.#direction += uniform(-1, 1) * this.#direction_delta;
       this.#position[0] += this.#step_length * Math.cos(this.#direction);
@@ -49,7 +49,7 @@ export class Branch implements Head {
       this.#done = uniform(0, 1) < this.#stop_prob;
     }
     return {
-      value: [...this.#position],
+      value: { position: [...this.#position], color: "black" },
       done: this.#done,
     };
   }
