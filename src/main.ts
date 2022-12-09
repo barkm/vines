@@ -33,7 +33,7 @@ let update = (traces: Trace[]): Trace[] =>
 let traces: Trace[] = [];
 
 const generate = (position: [number, number]) => {
-  return linspace(0, 2 * Math.PI, 50).map(
+  return linspace(0, 2 * Math.PI, 20).map(
     (d): Trace => ({
       head: new Branch({
         position: [...position],
@@ -56,7 +56,7 @@ canvas.addEventListener("click", (event: MouseEvent) => {
 
 const animate = () => {
   traces = update(traces);
-  // context.globalAlpha = 0.075;
+  // context.globalAlpha = 0.02;
   // context.fillStyle = "white";
   // context.fillRect(0, 0, canvas.width, canvas.height);
   // context.globalAlpha = 1.0;
