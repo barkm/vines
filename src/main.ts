@@ -1,5 +1,6 @@
 import { CanvasPlotter, Plotter } from "./plotter";
-import { Branch, Head } from "./head";
+import { Head } from "./heads/head";
+import { Branch } from "./heads/branch";
 import { linspace } from "./utils";
 
 let canvas = document.getElementById("canvas") as HTMLCanvasElement;
@@ -33,7 +34,7 @@ let update = (traces: Trace[]): Trace[] =>
 let traces: Trace[] = [];
 
 const generate = (position: [number, number]) => {
-  return linspace(0, 2 * Math.PI, 20).map(
+  return linspace(0, 2 * Math.PI, 50).map(
     (d): Trace => ({
       head: new Branch({
         position: [...position],
@@ -56,7 +57,7 @@ canvas.addEventListener("click", (event: MouseEvent) => {
 
 const animate = () => {
   traces = update(traces);
-  // context.globalAlpha = 0.02;
+  // context.globalAlpha = 0.05;
   // context.fillStyle = "white";
   // context.fillRect(0, 0, canvas.width, canvas.height);
   // context.globalAlpha = 1.0;
