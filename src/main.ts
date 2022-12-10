@@ -2,6 +2,7 @@ import { CanvasPlotter, Plotter } from "./plotter";
 import { Head } from "./heads/head";
 import { Branch } from "./heads/branch";
 import { linspace } from "./utils";
+import "./style.css";
 
 let canvas = document.getElementById("canvas") as HTMLCanvasElement;
 canvas.width = window.devicePixelRatio * window.innerWidth;
@@ -45,7 +46,14 @@ const generate = (position: [number, number]) => {
   );
 };
 
-traces = generate([canvas.width / 2, canvas.height / 2]);
+const width = window.devicePixelRatio * window.innerWidth;
+const height = window.devicePixelRatio * window.innerHeight;
+
+traces = generate([width / 2, height / 2]);
+
+setInterval(() => {
+  traces.push(...generate([Math.random() * width, Math.random() * height]));
+}, 10000);
 
 canvas.addEventListener("click", (event: MouseEvent) => {
   const position = [
@@ -55,12 +63,20 @@ canvas.addEventListener("click", (event: MouseEvent) => {
   traces.push(...generate(position));
 });
 
+let i = 0;
 const animate = () => {
+  context.globalAlpha = 0.5;
   traces = update(traces);
-  // context.globalAlpha = 0.05;
-  // context.fillStyle = "white";
-  // context.fillRect(0, 0, canvas.width, canvas.height);
-  // context.globalAlpha = 1.0;
+  if (!traces.length) {
+    if (i > 60) {
+      context.globalAlpha = 0.1;
+      context.fillStyle = "white";
+      context.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    i++;
+  } else {
+    i = 0;
+  }
   requestAnimationFrame(animate);
 };
 animate();

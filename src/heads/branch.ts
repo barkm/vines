@@ -21,7 +21,7 @@ export class Branch implements Head {
     stop_prob = 0.0075,
     branch_prob = 0.01,
     leaf_prob = 0.1,
-    flower_prob = 0.01,
+    flower_prob = 0.0075,
   }: {
     position: [number, number];
     direction?: number;
@@ -80,7 +80,7 @@ export class Branch implements Head {
           position: [...this.#position],
           direction: this.#direction,
           direction_delta: saturate(this.#direction_delta, Math.PI / 2),
-          stop_prob: saturate(1.75 * this.#stop_prob),
+          stop_prob: saturate(3 * this.#stop_prob),
           branch_prob: saturate(this.#branch_prob),
           leaf_prob: saturate(this.#leaf_prob),
           flower_prob: saturate(this.#flower_prob),
