@@ -41,7 +41,12 @@ const generate = (position: [number, number]) => {
         position: [...position],
         direction: d,
       }),
-      plotter: new CanvasPlotter([...position], context),
+      plotter: new CanvasPlotter(
+        [...position],
+        context,
+        canvas.width,
+        canvas.height
+      ),
     })
   );
 };
