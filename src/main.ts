@@ -56,10 +56,6 @@ const height = window.devicePixelRatio * window.innerHeight;
 
 traces = generate([width / 2, height / 2]);
 
-setInterval(() => {
-  traces.push(...generate([Math.random() * width, Math.random() * height]));
-}, 10000);
-
 canvas.addEventListener("click", (event: MouseEvent) => {
   const position = [
     window.devicePixelRatio * event.x,
@@ -73,14 +69,17 @@ const animate = () => {
   context.globalAlpha = 0.5;
   traces = update(traces);
   if (!traces.length) {
-    if (i > 60) {
-      context.globalAlpha = 0.1;
-      context.fillStyle = "white";
-      context.fillRect(0, 0, canvas.width, canvas.height);
-    }
     i++;
   } else {
     i = 0;
+  }
+  if (i > 60) {
+    context.globalAlpha = 0.1;
+    context.fillStyle = "white";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+  }
+  if (i > 100) {
+    traces.push(...generate([Math.random() * width, Math.random() * height]));
   }
   requestAnimationFrame(animate);
 };
